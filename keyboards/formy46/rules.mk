@@ -15,16 +15,14 @@ SLEEP_LED_ENABLE        =  no        # Breathing sleep LED during USB suspend
 # if this doesn't work, see here: https://github.com/tmk/tmk_keyboard/wiki/FAQ#nkro-doesnt-work
 NKRO_ENABLE             =  no        # USB Nkey Rollover
 BACKLIGHT_ENABLE        =  no        # Enable keyboard backlight functionality
-RGBLIGHT_ENABLE         =  no        # Enable keyboard RGB underglow
 BLUETOOTH_ENABLE        =  no        # Enable Bluetooth
 AUDIO_ENABLE            =  no        # Audio output
 LTO_ENABLE              =  yes       # Reduced firmware size
 
 # Formy46 Features Options
 SPLIT_KEYBOARD          =  yes       # Enable Split Keyboard
-RGBLIGHT_ENABLE         =  no
-RGB_MATRIX_ENABLE       =  no       # Enable keyboard RGB Matrix
-RGB_MATRIX_DRIVER       =  WS2812    # RGB Matrix driver
+RGBLIGHT_ENABLE         =  no        # Enable keyboard RGB underglow
+RGB_MATRIX_ENABLE       =  no        # Enable keyboard RGB Matrix
 SRC                    +=  analog.c  # adc driver
 JOYSTICK_ENABLE         =  yes       # Enable Joystick
 POINTING_DEVICE_ENABLE  =  yes       # Enable Pointing Device
