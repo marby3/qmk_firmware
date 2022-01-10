@@ -1,12 +1,12 @@
 # formy46
-===
-[formy42](https://imgur.com/a/a3PWhZx)
+
+[formy46](https://imgur.com/a/a3PWhZx)
 
 ## Description
 A compact and multifunctional split keyboard.
 
 * Keyboard Maintainer: [marby3](https://github.com/yourusername)
-* Hardware Supported: *Formy46PCB, ProMicro, MX Swhitch, Choc Switch*
+* Hardware Supported: *Formy46PCB, ProMicro, MX Switch, Choc Switch*
 * Hardware Availability: *Links to where you can find this hardware*
 
 ## Build

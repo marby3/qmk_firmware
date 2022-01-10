@@ -13,6 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #include QMK_KEYBOARD_H
 #include "joystick.h"
 #include "analog.h"
@@ -20,7 +21,8 @@
 #include <stdio.h>
 
 /* layer change */
-#define FUNC    MO(_FN)
+#define FUNC_1    MO(_FN1)
+#define FUNC_2    MO(_FN2)
 bool re_function = false;
 
 /* short cut */
@@ -33,9 +35,10 @@ bool re_function = false;
 
 enum layer_names {
     _BASE = 0,
-    _GAME_MODE,
-    _CREATION_MODE,
-    _FN
+    _GAMER_MODE,
+    _CREATOR_MODE,
+    _FN1,
+    _FN2
 };
 
 enum custom_keycodes {
@@ -46,31 +49,37 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Base Mode */
     [_BASE] = LAYOUT(
-        KC_Q,    KC_W,    KC_E,    KC_R,       KC_T,                                                 KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
-        KC_A,    KC_S,    KC_D,    KC_F,       KC_G,                                                 KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,
-        KC_Z,    KC_X,    KC_C,    KC_V,       KC_B,     KC_NO,                         KC_GRV,      KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,
-        KC_LSFT, KC_LCTL, KC_LGUI, KC_LALT,     JS_MODE, KC_SPC,  RE_MODE,     KC_BSPC, KC_ENT,  KC_DEL,      KC_RALT, KC_RGUI, KC_RCTL, FUNC
+        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                                            KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
+        KC_LSFT, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                                            KC_H,    KC_J,    KC_K,    KC_L,    KC_LBRC, KC_RBRC,
+        KC_LCTL, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                KC_MINS,                       KC_EQL,      KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, FUNC_2,
+                                                        KC_LALT, JS_MODE, KC_SPC,  KC_SPC,      RE_MODE, KC_ENT, FUNC_1,  KC_LGUI
     ),
     /* Game Mode */
-    [_GAME_MODE] = LAYOUT(
-        _______, _______, _______, _______, _______,                                                 _______, _______, _______, _______, _______,
-        _______, _______, _______, _______, _______,                                                 _______, _______, _______, _______, _______,
-        _______, _______, _______, _______, _______,     _______,                       _______,     _______, _______, _______, _______, _______,
-        _______, _______, _______, _______,     KC_NO,   _______, _______,     _______, _______, _______,     _______, _______, _______, _______
+    [_GAMER_MODE] = LAYOUT(
+        _______, _______, _______, _______, _______, _______,                                                         _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,                                                         _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,             _______,                       _______,     _______, _______, _______, _______, _______, _______,
+                                                        _______, _______, _______, _______,     _______, _______, _______,     _______
     ),
-    /* Creation Mode */
-    [_CREATION_MODE] = LAYOUT(
-        KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,                                                    _______, _______, _______, _______, _______,
-        KC_TAB,  KC_LBRC, KC_RBRC, UNDO,    KC_M,                                                    _______, _______, _______, _______, _______,
-        KC_LSFT, KC_B,    KC_P,    REDO,    KC_E,       _______,                        _______,     _______, CUT,     COPY,    PASTE,   SAVE,
-        KC_LCTL, _______, KC_X,    KC_LALT,     KC_NO,  _______,  _______,     _______, _______, _______,     _______, _______, _______, _______
+    /* Creator Mode */
+    [_CREATOR_MODE] = LAYOUT(
+        _______, _______, _______, _______, _______, _______,                                                         _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,                                                         _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,             _______,                       _______,     _______, _______, _______, _______, _______, _______,
+                                                        _______, _______, _______, _______,     _______, _______, _______,     _______
     ),
     /* Function Mode */
-    [_FN] = LAYOUT(
-        KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                                    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,
-        _______, _______, _______, _______, KC_MINS,                                                 KC_EQL,  _______, _______, _______, KC_BSLS,
-        _______, _______, _______, _______, KC_LBRC,     _______,                       _______,     KC_RBRC, _______, _______, _______, _______,
-        _______, _______, _______, _______,     KC_NO,   _______, _______,     _______, _______, _______,     _______, _______, _______, _______
+    [_FN1] = LAYOUT(
+        KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                                            KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_NUBS,
+        _______, _______, _______, _______, _______, _______,                                                         _______, RGB_TOG, RGB_MOD,RGB_RMOD, KC_SCLN, KC_QUOT,
+        _______, _______, _______, _______, _______, KC_GRV,              _______,                       _______,     _______, _______, _______, _______, _______, _______,
+                                                        KC_LALT, _______, _______, _______,     _______, _______, FUNC_1,      KC_APP
+    ),
+    [_FN2] = LAYOUT(
+        KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                                                           RGB_HUI, RGB_HUD, _______, KC_PSCR, KC_SCRL, KC_PAUS,
+        KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,                                                          RGB_SAI, RGB_SAD, _______, KC_HOME, KC_PGUP, KC_INS,
+        _______, _______, _______, _______, _______, _______,             _______,                       KC_UP,       RGB_VAI, RGB_VAD, _______, KC_END,  KC_PGDN, FUNC_2,
+                                                        _______, _______, _______, _______,     KC_LEFT, KC_DOWN, KC_RGHT,     KC_DEL
     )
 };
 
@@ -79,6 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #ifdef JOYSTICK_ENABLE
 // Change this
 char arrow_keys[4] = {KC_UP, KC_LEFT, KC_DOWN, KC_RIGHT}; // up, left, down, right
+//char arrow_keys[4] = {KC_W, KC_A, KC_S, KC_D}; // W, A, S, D
 static int joystickThreshold = 6; // Value to prevent joystick drift
 static int joystickResolution = 32; // Decide the movement speed of the joystick
 // Don't chnage this
@@ -160,9 +170,9 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         case _BASE:
             if (re_function){
                 if (clockwise) {
-                    layer_move(_GAME_MODE);
+                    layer_move(_GAMER_MODE);
                 } else {
-                    layer_move(_CREATION_MODE);
+                    layer_move(_CREATOR_MODE);
                 }
             } else {
                 if (clockwise) {
@@ -172,10 +182,10 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 }
             }
             break;
-        case _GAME_MODE:
+        case _GAMER_MODE:
             if (re_function){
                 if (clockwise) {
-                    layer_move(_CREATION_MODE);
+                    layer_move(_CREATOR_MODE);
                 } else {
                     layer_move(_BASE);
                 }
@@ -187,12 +197,12 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 }
             }
             break;
-        case _CREATION_MODE:
+        case _CREATOR_MODE:
             if (re_function){
                 if (clockwise) {
                     layer_move(_BASE);
                 } else {
-                    layer_move(_GAME_MODE);
+                    layer_move(_GAMER_MODE);
                 }
             } else {
                 if (clockwise) {
@@ -204,7 +214,22 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 }
             }
             break;
-        case _FN:
+        case _FN1:
+            if (re_function){
+                if (clockwise) {
+                    tap_code(KC_VOLU);
+                } else {
+                    tap_code(KC_VOLD);
+                }
+            } else {
+                if (clockwise) {
+                    tap_code(KC_WH_U);
+                } else {
+                    tap_code(KC_WH_D);
+                }
+            }
+            break;
+        case _FN2:
             if (re_function){
                 if (clockwise) {
                     tap_code(KC_VOLU);
@@ -275,9 +300,11 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 void render_layer_state(void) {
     oled_write_P(PSTR("Mode:\n"), false);
     oled_write_P(PSTR("Main\n"), get_highest_layer(layer_state) == _BASE);
-    oled_write_P(PSTR("Game\n"), layer_state_is(_GAME_MODE));
-    oled_write_P(PSTR("Crea\n"), layer_state_is(_CREATION_MODE));
-    oled_write_P(PSTR("Func\n"), layer_state_is(_FN));
+    oled_write_P(PSTR("Game\n"), layer_state_is(_GAMER_MODE));
+    oled_write_P(PSTR("Crea\n"), layer_state_is(_CREATOR_MODE));
+    oled_write_P(PSTR("Fn 1\n"), layer_state_is(_FN1));
+    oled_write_P(PSTR("Fn 2\n"), layer_state_is(_FN2));
+/*
     #ifdef RGB_MATRIX_ENABLE
         oled_write_ln_P(PSTR(""), false);
         oled_write_ln_P(PSTR("LED:"), false);
@@ -303,15 +330,17 @@ void render_layer_state(void) {
         oled_write_P(PSTR("V:"), false);
         oled_write(rgblight_val, false);
     #endif
+    */
 }
 
-void oled_task_user(void) {
+bool oled_task_user(void) {
     if (is_keyboard_master()) {
         render_layer_state();
     } else {
         render_logo();
         oled_scroll_right();  // Turns on scrolling
     }
+    return false;
 }
 #endif
 
