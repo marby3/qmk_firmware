@@ -40,7 +40,7 @@
  */
 #define SOFT_SERIAL_PIN D2
 
-#define RGB_DI_PIN E2
+#define RGB_DI_PIN D3
 #ifdef RGB_MATRIX_ENABLE
     #define RGBLED_NUM 60
     #define DRIVER_LED_TOTAL RGBLED_NUM
